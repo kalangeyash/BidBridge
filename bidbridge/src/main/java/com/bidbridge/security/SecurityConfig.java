@@ -18,29 +18,31 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter; 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)
-            throws Exception {
-
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .sessionManagement(sm ->
                 sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .authorizeHttpRequests(auth -> auth
-
-                // Public endpoints
+                // 1. PUBLIC: Authentication and Registration
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/buyers/register").permitAll() // Added this
+                .requestMatchers("/api/vendors/register").permitAll() // Added this
 
-                // Admin-only endpoints
+                .requestMatchers("/v3/api-docs/**").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
+                .requestMatchers("/swagger-ui.html").permitAll()
+                .requestMatchers("/webjars/**").permitAll()
+                .requestMatchers("/v3/api-docs").permitAll() 
+                .requestMatchers("/v3/api-docs/swagger-config").permitAll()
+                // 2. PROTECTED: Role-based access
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/buyers/**").hasRole("BUYER") // Matches BuyerController
+                .requestMatchers("/api/vendors/**").hasRole("VENDOR") // Matches VendorController
+                .requestMatchers("/api/bids/**").hasAnyRole("BUYER", "VENDOR") 
 
-                // Buyer-only endpoints
-                .requestMatchers("/api/buyer/**").hasRole("BUYER")
-                
-             // Vendor-only endpoints
-                .requestMatchers("/api/vendor/**").hasRole("VENDOR")
-
-                // Any other request must be authenticated
+                // 3. SECURE: Everything else
                 .anyRequest().authenticated()
             )
             .addFilterBefore(
