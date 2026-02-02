@@ -1,5 +1,6 @@
 import { Shield } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 interface NavigationProps {
   onRoleChange: (role: 'buyer' | 'vendor') => void;
@@ -19,11 +20,10 @@ export default function Navigation({ onRoleChange, currentRole }: NavigationProp
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? 'bg-[#0a0a0a]/95 backdrop-blur-md border-b border-[#fb6376]/10'
           : 'bg-transparent'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
@@ -51,32 +51,32 @@ export default function Navigation({ onRoleChange, currentRole }: NavigationProp
             <div className="flex items-center bg-[#5d2a42]/30 rounded-full p-1 border border-[#fb6376]/20">
               <button
                 onClick={() => onRoleChange('buyer')}
-                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
-                  currentRole === 'buyer'
+                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${currentRole === 'buyer'
                     ? 'bg-[#fb6376] text-white'
                     : 'text-[#ffdccc]/60 hover:text-white'
-                }`}
+                  }`}
               >
                 Buyer
               </button>
               <button
                 onClick={() => onRoleChange('vendor')}
-                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
-                  currentRole === 'vendor'
+                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${currentRole === 'vendor'
                     ? 'bg-[#fb6376] text-white'
                     : 'text-[#ffdccc]/60 hover:text-white'
-                }`}
+                  }`}
               >
                 Vendor
               </button>
             </div>
           </div>
 
-          <button className="relative px-6 py-2.5 bg-transparent border border-[#fb6376] text-[#fb6376] rounded-md text-sm font-medium hover:bg-[#fb6376]/10 transition-all group overflow-hidden">
-            <span className="relative z-10">Login</span>
-            <div className="absolute inset-0 bg-[#fb6376]/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <div className="absolute inset-0 shadow-[0_0_15px_rgba(251,99,118,0)] group-hover:shadow-[0_0_15px_rgba(251,99,118,0.3)] transition-shadow"></div>
-          </button>
+          <Link to="/login">
+            <button className="relative px-6 py-2.5 bg-transparent border border-[#fb6376] text-[#fb6376] rounded-md text-sm font-medium hover:bg-[#fb6376]/10 transition-all group overflow-hidden">
+              <span className="relative z-10">Login</span>
+              <div className="absolute inset-0 bg-[#fb6376]/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute inset-0 shadow-[0_0_15px_rgba(251,99,118,0)] group-hover:shadow-[0_0_15px_rgba(251,99,118,0.3)] transition-shadow"></div>
+            </button>
+          </Link>
         </div>
       </div>
     </nav>
