@@ -6,7 +6,7 @@ export default function Features() {
       icon: Fingerprint,
       title: 'Identity Verification',
       description: 'GST-based authentication and role verification ensure only legitimate entities participate.',
-      details: ['Government ID validation', 'GST number verification', 'Digital signatures'],
+      details: ['Government ID validation', 'GST number verification'],
     },
     {
       icon: Lock,
@@ -14,30 +14,30 @@ export default function Features() {
       description: 'Cryptographic sealing ensures bids remain confidential until the designated opening time.',
       details: ['AES-256 encryption', 'Tamper-proof storage', 'Time-locked reveals'],
     },
-    {
-      icon: FileCheck,
-      title: 'Automated Compliance',
-      description: 'Real-time validation against procurement regulations and organizational policies.',
-      details: ['GFR compliance', 'Policy automation', 'Audit trail generation'],
-    },
+    // {
+    //   icon: FileCheck,
+    //   title: 'Automated Compliance',
+    //   description: 'Real-time validation against procurement regulations and organizational policies.',
+    //   details: ['GFR compliance', 'Policy automation', 'Audit trail generation'],
+    // },
     {
       icon: CheckCircle2,
       title: 'Transparent Evaluation',
       description: 'Objective scoring mechanisms with complete audit trails for every decision.',
-      details: ['Multi-criteria scoring', 'Weighted evaluation', 'Dispute resolution'],
+      details: ['Weighted evaluation', 'Dispute resolution'],
     },
-    {
-      icon: Shield,
-      title: 'Bank-Grade Security',
-      description: 'Enterprise security infrastructure protecting sensitive procurement data.',
-      details: ['ISO 27001 certified', 'Regular penetration tests', '99.99% uptime SLA'],
-    },
-    {
-      icon: FileText,
-      title: 'Digital Documentation',
-      description: 'Complete paperless workflow with legally valid electronic records.',
-      details: ['E-stamping support', 'Document versioning', 'Cloud archival'],
-    },
+    // {
+    //   icon: Shield,
+    //   title: 'Bank-Grade Security',
+    //   description: 'Enterprise security infrastructure protecting sensitive procurement data.',
+    //   details: ['ISO 27001 certified', 'Regular penetration tests', '99.99% uptime SLA'],
+    // },
+    // {
+    //   icon: FileText,
+    //   title: 'Digital Documentation',
+    //   description: 'Complete paperless workflow with legally valid electronic records.',
+    //   details: ['E-stamping support', 'Document versioning', 'Cloud archival'],
+    // },
   ];
 
   return (

@@ -347,7 +347,7 @@ const Register = () => {
         </Link>
       </p>
 
-      <p className="text-center text-xs text-muted-foreground mt-4">
+      {/* <p className="text-center text-xs text-muted-foreground mt-4">
         By registering, you agree to our{' '}
         <Link to="/terms" className="text-primary hover:underline">
           Terms of Service
@@ -356,7 +356,7 @@ const Register = () => {
         <Link to="/privacy" className="text-primary hover:underline">
           Privacy Policy
         </Link>
-      </p>
+      </p> */}
     </AuthLayout>
   );
 };

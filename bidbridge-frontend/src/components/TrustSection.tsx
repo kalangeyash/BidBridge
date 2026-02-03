@@ -5,7 +5,7 @@ export default function TrustSection() {
     { name: 'Ministry of Finance', icon: Landmark },
     { name: 'State Education Board', icon: GraduationCap },
     { name: 'Municipal Corporation', icon: Building2 },
-    { name: 'Public Works Dept', icon: Factory },
+    { name: 'IT Industry', icon: Factory },
     { name: 'Health Services', icon: Building2 },
     { name: 'Transport Authority', icon: Factory },
   ];
@@ -39,7 +39,7 @@ export default function TrustSection() {
           ))}
         </div>
 
-        <div className="mt-16 grid md:grid-cols-3 gap-8">
+        {/* <div className="mt-16 grid md:grid-cols-3 gap-8">
           <div className="text-center">
             <div className="text-4xl font-bold text-white mb-2">98%</div>
             <div className="text-sm text-[#ffdccc]/60">Client Satisfaction</div>
@@ -52,9 +52,9 @@ export default function TrustSection() {
             <div className="text-4xl font-bold text-white mb-2">Zero</div>
             <div className="text-sm text-[#ffdccc]/60">Security Breaches</div>
           </div>
-        </div>
+        </div> */}
 
-        <div className="mt-16 bg-gradient-to-br from-[#5d2a42]/20 to-transparent border border-[#fb6376]/30 rounded-xl p-8">
+        {/* <div className="mt-16 bg-gradient-to-br from-[#5d2a42]/20 to-transparent border border-[#fb6376]/30 rounded-xl p-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex-1">
               <h3 className="text-2xl font-bold text-white mb-2">ISO 27001 Certified</h3>
@@ -73,7 +73,7 @@ export default function TrustSection() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

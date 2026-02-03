@@ -27,7 +27,8 @@ export default function Navigation({ onRoleChange, currentRole }: NavigationProp
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center space-x-3">
+          <Link to='/'>
+            <div className="flex items-center space-x-3">
             <div className="relative">
               <Shield className="w-8 h-8 text-[#fb6376]" strokeWidth={1.5} />
               <div className="absolute inset-0 bg-[#fb6376]/20 blur-xl"></div>
@@ -36,6 +37,7 @@ export default function Navigation({ onRoleChange, currentRole }: NavigationProp
               Bid<span className="text-[#fb6376]">Bridge</span>
             </span>
           </div>
+          </Link>
 
           <div className="hidden md:flex items-center space-x-8">
             <a href="#features" className="text-sm text-[#ffdccc]/80 hover:text-white transition-colors">

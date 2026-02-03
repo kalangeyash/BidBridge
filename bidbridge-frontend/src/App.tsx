@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
-import LiveFeed from './components/LiveFeed';
+// import LiveFeed from './components/LiveFeed';
 import Features from './components/Features';
 import SealedVault from './components/SealedVault';
 import TrustSection from './components/TrustSection';
 import CallToAction from './components/CallToAction';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -15,12 +15,13 @@ import BuyerDashboard from './components/buyer/BuyerDashboard';
 import VendorDashboard from './components/vendor/VendorDashboard';
 import CreateTender from './components/buyer/CreateTender';
 import BrowseTenders from './components/vendor/BrowseTenders';
+import AdminDashboard from './components/admin/AdminDashboard';
 
 // A separate component for the Landing Page to keep App.tsx clean
 const LandingPage = ({ role }: { role: 'buyer' | 'vendor' }) => (
   <>
     <Hero role={role} />
-    <LiveFeed />
+    {/* <LiveFeed /> */}
     <Features />
     <SealedVault />
     <TrustSection />
@@ -54,9 +55,16 @@ function App() {
           <Route path="/vendor/dashboard" element={<VendorDashboard />} />
           <Route path="/vendor/tenders" element={<BrowseTenders />} />
         </Route>
+        {/* Admin Specific Routes */}
+        <Route element={<ProtectedRoute allowedRoles={['ROLE_ADMIN']}/>}>
+          <Route path="/admin/dashboard" element={<AdminDashboard/>}/>
+        </Route>
+
       </Routes>
 
-      <Footer />
+
+
+      {/* <Footer /> */}
     </div>
     </Router >
   );

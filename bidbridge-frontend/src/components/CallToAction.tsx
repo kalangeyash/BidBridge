@@ -93,7 +93,7 @@ export default function CallToAction() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-[#5d2a42]/30 to-transparent backdrop-blur-sm border border-[#fb6376]/30 rounded-2xl p-8 max-w-3xl mx-auto">
+        {/* <div className="bg-gradient-to-br from-[#5d2a42]/30 to-transparent backdrop-blur-sm border border-[#fb6376]/30 rounded-2xl p-8 max-w-3xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-start space-x-4">
               <div className="bg-[#fb6376]/10 p-3 rounded-lg">
@@ -110,7 +110,7 @@ export default function CallToAction() {
               Contact Sales
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

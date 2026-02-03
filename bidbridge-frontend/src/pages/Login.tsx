@@ -24,7 +24,21 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: LoginInput) => {
+  // const onSubmit = async (data: LoginInput) => {
+  //   setIsLoading(true);
+    
+  //   const result = await authService.login(data);
+    
+  //   setIsLoading(false);
+    
+  //   if (result.success) {
+  //     toast.success('Login successful! Redirecting...');
+  //     navigate('/');
+  //   } else {
+  //     toast.error(result.message || 'Login failed');
+  //   }
+  // };
+const onSubmit = async (data: LoginInput) => {
     setIsLoading(true);
     
     const result = await authService.login(data);
@@ -33,7 +47,24 @@ const Login = () => {
     
     if (result.success) {
       toast.success('Login successful! Redirecting...');
-      navigate('/');
+      
+      // Get the role from localStorage (set by authService)
+      const role = localStorage.getItem('userRole');
+
+      // Redirect based on role
+      switch (role) {
+        case 'ROLE_ADMIN':
+          navigate('/admin/dashboard');
+          break;
+        case 'ROLE_BUYER':
+          navigate('/buyer/dashboard');
+          break;
+        case 'ROLE_VENDOR':
+          navigate('/vendor/dashboard');
+          break;
+        default:
+          navigate('/'); // Fallback to home
+      }
     } else {
       toast.error(result.message || 'Login failed');
     }
@@ -66,12 +97,12 @@ const Login = () => {
             <Label htmlFor="password" className="text-foreground">
               Password
             </Label>
-            <Link
+            {/* <Link
               to="/forgot-password"
               className="text-sm text-primary hover:text-primary/80 transition-colors"
             >
               Forgot password?
-            </Link>
+            </Link> */}
           </div>
           <div className="relative">
             <Input

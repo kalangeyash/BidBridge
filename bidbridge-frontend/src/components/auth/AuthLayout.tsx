@@ -22,10 +22,10 @@ const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
         {/* Content */}
         <div className="relative z-10 flex flex-col justify-between p-12 w-full">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-              <Shield className="w-6 h-6 text-primary" />
-            </div>
-            <span className="text-2xl font-bold text-primary">BidBridge</span>
+            {/* <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center"> */}
+              {/* <Shield className="w-6 h-6 text-primary" /> */}
+            {/* </div> */}
+            <span className="text-2xl font-bold text-primary"></span>
           </Link>
           
           <div className="max-w-md">

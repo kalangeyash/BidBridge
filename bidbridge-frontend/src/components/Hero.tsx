@@ -30,7 +30,7 @@ export default function Hero({ role }: HeroProps) {
 
             <p className="text-xl text-[#ffdccc]/70 leading-relaxed max-w-lg">
               {role === 'buyer'
-                ? 'Launch secure tenders with automated compliance. Sealed bids, verified vendors, transparent outcomes.'
+                ? 'Launch secure tenders. Sealed bids, verified vendors, transparent outcomes.'
                 : 'Discover verified opportunities. Submit sealed bids with confidence. Build your reputation.'}
             </p>
 
@@ -44,7 +44,7 @@ export default function Hero({ role }: HeroProps) {
               </button>
             </div>
 
-            <div className="flex items-center space-x-8 pt-8 border-t border-[#fb6376]/10">
+            {/* <div className="flex items-center space-x-8 pt-8 border-t border-[#fb6376]/10">
               <div>
                 <div className="text-3xl font-bold text-white">₹2,400Cr+</div>
                 <div className="text-sm text-[#ffdccc]/60">Tenders Processed</div>
@@ -59,7 +59,7 @@ export default function Hero({ role }: HeroProps) {
                 <div className="text-3xl font-bold text-white">100%</div>
                 <div className="text-sm text-[#ffdccc]/60">Sealed Security</div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="relative lg:block hidden">
@@ -164,7 +164,7 @@ export default function Hero({ role }: HeroProps) {
                   <span className="text-xs text-[#ffdccc]/80">Active Bid</span>
                 </div>
                 <div className="text-sm font-medium">₹45.2L</div>
-                <div className="text-xs text-[#ffdccc]/60">Construction Materials</div>
+                <div className="text-xs text-[#ffdccc]/60">Networking Cables</div>
               </div>
             </div>
           </div>

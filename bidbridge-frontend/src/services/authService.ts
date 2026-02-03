@@ -27,7 +27,7 @@ export const vendorRegisterSchema = z.object({
   gstNumber: z.string().regex(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/, { 
     message: "Enter a valid GST number (e.g., 27ABCDE1234F5Z7)" 
   }),
-  address: z.string().trim().min(10, { message: "Address must be at least 10 characters" }).max(500),
+  address: z.string().trim().min(1, { message: "Address must be at least 10 characters" }).max(500),
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;
