@@ -14,4 +14,6 @@ public interface TenderService {
     List<Tender> getTendersByBuyer(Long buyerProfileId);
 
     List<Tender> getActiveTenders();
+    
+    List<Tender> getTendersByBuyerId(Long buyerProfileId);
 }

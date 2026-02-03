@@ -21,31 +21,38 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    
+    // 1. ADD THESE TWO LINES HERE
+    private final com.bidbridge.service.BuyerProfileService buyerService;
+    private final com.bidbridge.service.VendorProfileService vendorService;
 
     @PostMapping("/login")
-    // 1. Keep @Valid for safety
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         
-        // 2. Authenticate
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
-        // 3. Use the principal for type safety
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        
-        // 4. Generate token
         String token = jwtUtil.generateToken(userDetails.getUsername());
-
-        // 5. Clean role extraction (gets the first role without brackets)
         String role = userDetails.getAuthorities().isEmpty() ? "" : 
                       userDetails.getAuthorities().iterator().next().getAuthority();
 
-        // 6. Return response
+        Long profileId = null;
+        Long userId = userDetails.getUser().getUserId();
+
+        // 2. These will now work because the services are injected above
+        if (role.equals("ROLE_BUYER")) {
+            profileId = buyerService.getProfileByUserId(userId).getBuyerProfileId();
+        } else if (role.equals("ROLE_VENDOR")) {
+            profileId = vendorService.getProfileByUserId(userId).getVendorProfileId();
+        }
+
         AuthResponse response = new AuthResponse(
                 token,
                 userDetails.getUsername(),
                 role,
+                profileId, 
                 "Login successful"
         );
 

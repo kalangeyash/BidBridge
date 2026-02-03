@@ -50,19 +50,19 @@ const api = axios.create({
 export const authService = {
   async login(credentials: LoginInput): Promise<ApiResponse> {
     try {
-      // Axios post is much cleaner than fetch
-      const response = await api.post('/auth/login', credentials);
-      
-      const data = response.data;
+    const response = await api.post('/auth/login', credentials);
+    const data = response.data;
 
-      // Store token from your Spring Boot AuthResponse DTO
-      if (data.token) {
-        localStorage.setItem('authToken', data.token);
-        // Optional: store role/email for UI logic
-        localStorage.setItem('userRole', data.role);
+    if (data.token) {
+      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('userRole', data.role);
+      // STORE THE PROFILE ID
+      if (data.profileId) {
+        localStorage.setItem('profileId', data.profileId.toString());
       }
+    }
 
-      return { success: true, data };
+    return { success: true, data };
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>;
       return {

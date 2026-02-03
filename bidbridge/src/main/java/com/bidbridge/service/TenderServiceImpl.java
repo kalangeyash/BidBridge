@@ -76,4 +76,15 @@ public class TenderServiceImpl implements TenderService {
                 LocalDateTime.now()
         		   );
     }
+    @Override
+    public List<Tender> getTendersByBuyerId(Long buyerProfileId) {
+
+        // Optional validation (recommended)
+        if (!buyerProfileRepository.existsById(buyerProfileId)) {
+            throw new ResourceNotFoundException("Buyer profile not found");
+        }
+
+        return tenderRepository.findByBuyerProfileBuyerProfileId(buyerProfileId);
+    }
+
 }

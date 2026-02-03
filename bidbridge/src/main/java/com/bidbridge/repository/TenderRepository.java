@@ -15,6 +15,7 @@ public interface TenderRepository extends JpaRepository<Tender, Long> {
 
     // All tenders by buyer organization
     List<Tender> findByBuyerProfile(BuyerProfile buyerProfile);
+    
 
     // All OPEN tenders
     List<Tender> findByStatus(TenderStatus status);
@@ -27,4 +28,7 @@ public interface TenderRepository extends JpaRepository<Tender, Long> {
 
     // Category-wise tenders
     List<Tender> findByCategory(Category category);
+    
+    List<Tender> findByBuyerProfileBuyerProfileId(Long buyerProfileId);
+
 }

@@ -10,6 +10,10 @@ import com.bidbridge.service.BuyerProfileService;
 import com.bidbridge.service.TenderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -80,4 +84,23 @@ public class BuyerController {
 
         return new ResponseEntity<>(resp, HttpStatus.CREATED);
     }
+    @GetMapping("/{buyerId}/tenders")
+    public ResponseEntity<List<TenderResponse>> getBuyerTenders(@PathVariable Long buyerId) {
+//    	System.out.println("Principal: " + authentication.getPrincipal());
+//        System.out.println("Authorities: " + authentication.getAuthorities());
+        List<Tender> tenders = tenderService.getTendersByBuyerId(buyerId);
+        
+        List<TenderResponse> responses = tenders.stream()
+            .map(t -> new TenderResponse(
+                t.getTenderId(),
+                t.getTitle(),
+                t.getCategory().getName(),
+                t.getBuyerProfile().getOrganizationName(),
+                t.getStatus(),
+                t.getEndDate()
+            )).collect(Collectors.toList());
+
+        return ResponseEntity.ok(responses);
+    }
+    
 }

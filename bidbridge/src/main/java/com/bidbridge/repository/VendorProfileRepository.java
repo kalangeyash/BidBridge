@@ -13,4 +13,5 @@ public interface VendorProfileRepository extends JpaRepository<VendorProfile, Lo
     Optional<VendorProfile> findByUser(User user);
 
     boolean existsByUser(User user);
+    Optional<VendorProfile> findByUser_UserId(Long userId);
 }

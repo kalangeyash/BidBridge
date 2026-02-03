@@ -2,6 +2,7 @@ package com.bidbridge.service;
 
 
 import com.bidbridge.custom_exceptions.DuplicateResourceException;
+import com.bidbridge.custom_exceptions.ResourceNotFoundException;
 import com.bidbridge.entities.BuyerProfile;
 import com.bidbridge.entities.Role;
 import com.bidbridge.entities.User;
@@ -48,5 +49,10 @@ public class BuyerProfileServiceImpl implements BuyerProfileService {
         buyerProfile.setUser(savedUser);
 
         return buyerProfileRepository.save(buyerProfile);
+    }
+    @Override
+    public BuyerProfile getProfileByUserId(Long userId) {
+        return buyerProfileRepository.findByUser_UserId(userId)
+               .orElseThrow(() -> new ResourceNotFoundException("Profile not found"));
     }
 }

@@ -37,6 +37,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 CustomUserDetails userDetails =
                         (CustomUserDetails) userDetailsService
                                 .loadUserByUsername(username);
+             // DEBUG: Add this to your console to see what roles the backend is actually seeing
+                System.out.println("User " + username + " authorities: " + userDetails.getAuthorities());
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(

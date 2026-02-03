@@ -13,4 +13,5 @@ public interface BuyerProfileRepository extends JpaRepository<BuyerProfile, Long
     Optional<BuyerProfile> findByUser(User user);
 
     boolean existsByUser(User user);
+    Optional<BuyerProfile> findByUser_UserId(Long userId);
 }

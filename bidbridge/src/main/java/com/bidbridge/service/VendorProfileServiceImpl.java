@@ -2,6 +2,7 @@ package com.bidbridge.service;
 
 
 import com.bidbridge.custom_exceptions.DuplicateResourceException;
+import com.bidbridge.custom_exceptions.ResourceNotFoundException;
 import com.bidbridge.entities.Role;
 import com.bidbridge.entities.User;
 import com.bidbridge.entities.VendorProfile;
@@ -48,5 +49,10 @@ public class VendorProfileServiceImpl implements VendorProfileService {
         vendorProfile.setUser(savedUser);
 
         return vendorProfileRepository.save(vendorProfile);
+    }
+    @Override
+    public VendorProfile getProfileByUserId(Long userId) {
+        return vendorProfileRepository.findByUser_UserId(userId)
+               .orElseThrow(() -> new ResourceNotFoundException("Vendor profile not found for user ID: " + userId));
     }
 }
