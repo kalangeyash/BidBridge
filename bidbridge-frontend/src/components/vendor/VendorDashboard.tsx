@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard, LogOut, Gavel, Building2, Tag, Calendar, AlertCircle, ClipboardList, Search } from 'lucide-react';
+import { LayoutDashboard, LogOut, Gavel, Building2, Tag, Calendar, AlertCircle, ClipboardList, Search, UserCircle } from 'lucide-react';
 import api from '../../services/api'; 
 import { Button } from '../../components/ui/button';
 import { toast } from 'sonner';
 import BidModal from './BidModel'; 
+import UpdateProfileModal from './UpdateProfileModal'; // New Import
 
 // --- Interfaces ---
 interface Tender {
@@ -33,6 +34,7 @@ const VendorDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [selectedTender, setSelectedTender] = useState<Tender | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false); // New State
   
   const navigate = useNavigate();
   const vendorId = localStorage.getItem('profileId');
@@ -94,13 +96,24 @@ const VendorDashboard = () => {
           <p className="text-muted-foreground mt-1 text-sm">Welcome! Participate in active tenders or track your submissions.</p>
         </div>
         
-        <Button 
-          variant="outline" 
-          onClick={handleLogout}
-          className="border-red-500/50 text-red-500 hover:bg-red-500 hover:text-white flex gap-2"
-        >
-          <LogOut className="w-4 h-4" /> Logout
-        </Button>
+        <div className="flex gap-3">
+          {/* New Update Profile Button */}
+          <Button 
+            variant="outline" 
+            onClick={() => setIsUpdateModalOpen(true)}
+            className="border-primary/50 text-primary hover:bg-primary hover:text-white flex gap-2"
+          >
+            <UserCircle className="w-4 h-4" /> Update Profile
+          </Button>
+
+          <Button 
+            variant="outline" 
+            onClick={handleLogout}
+            className="border-red-500/50 text-red-500 hover:bg-red-500 hover:text-white flex gap-2"
+          >
+            <LogOut className="w-4 h-4" /> Logout
+          </Button>
+        </div>
       </div>
 
       {/* Tab Navigation */}
@@ -193,9 +206,17 @@ const VendorDashboard = () => {
         </div>
       )}
 
+      {/* Bid Submission Modal */}
       {selectedTender && (
         <BidModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} tender={selectedTender} />
       )}
+
+      {/* Profile Update Modal */}
+      <UpdateProfileModal 
+        isOpen={isUpdateModalOpen} 
+        onClose={() => setIsUpdateModalOpen(false)} 
+        vendorId={vendorId} 
+      />
     </div>
   );
 };

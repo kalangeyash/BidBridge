@@ -3,6 +3,7 @@ package com.bidbridge.controllers;
 
 import com.bidbridge.dto.VendorProfileResponse;
 import com.bidbridge.dto.VendorRegistrationRequest;
+import com.bidbridge.dto.VendorUpdateDTO;
 import com.bidbridge.entities.User;
 import com.bidbridge.entities.VendorProfile;
 import com.bidbridge.service.VendorProfileService;
@@ -44,4 +45,25 @@ public class VendorController {
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+    @GetMapping("/{vendorId}")
+    public ResponseEntity<VendorUpdateDTO> getProfile(@PathVariable Long vendorId) {
+        VendorProfile profile = vendorService.getVendorById(vendorId);
+        
+        // Create the DTO manually to avoid any recursion or proxy issues
+        VendorUpdateDTO dto = new VendorUpdateDTO();
+        dto.setName(profile.getUser().getName());
+        dto.setEmail(profile.getUser().getEmail());
+        dto.setCompanyName(profile.getCompanyName());
+        dto.setGstNumber(profile.getGstNumber());
+        dto.setAddress(profile.getAddress());
+        
+        return ResponseEntity.ok(dto);
+    }
+    @PutMapping("/{vendorId}/profile")
+    public ResponseEntity<VendorProfile> updateVendorProfile(
+            @PathVariable Long vendorId,
+            @Valid @RequestBody VendorUpdateDTO dto) {
+        return ResponseEntity.ok(vendorService.updateProfile(vendorId, dto));
+    }
+    
 }

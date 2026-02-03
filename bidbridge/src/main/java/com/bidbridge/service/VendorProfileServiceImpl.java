@@ -3,6 +3,8 @@ package com.bidbridge.service;
 
 import com.bidbridge.custom_exceptions.DuplicateResourceException;
 import com.bidbridge.custom_exceptions.ResourceNotFoundException;
+import com.bidbridge.dto.VendorProfileRequest;
+import com.bidbridge.dto.VendorUpdateDTO;
 import com.bidbridge.entities.Role;
 import com.bidbridge.entities.User;
 import com.bidbridge.entities.VendorProfile;
@@ -20,6 +22,7 @@ public class VendorProfileServiceImpl implements VendorProfileService {
 	private final UserRepository userRepository;
     private final VendorProfileRepository vendorProfileRepository;
     private final PasswordEncoder passwordEncoder;
+    
 
     @Override
    
@@ -54,5 +57,27 @@ public class VendorProfileServiceImpl implements VendorProfileService {
     public VendorProfile getProfileByUserId(Long userId) {
         return vendorProfileRepository.findByUser_UserId(userId)
                .orElseThrow(() -> new ResourceNotFoundException("Vendor profile not found for user ID: " + userId));
+    }
+    @Override
+    public VendorProfile getVendorById(Long vendorId) {
+        return vendorProfileRepository.findById(vendorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Vendor Profile not found with ID: " + vendorId));
+    }
+
+    @Override
+    @Transactional
+    public VendorProfile updateProfile(Long vendorId, VendorUpdateDTO dto) {
+        VendorProfile profile = getVendorById(vendorId); // Reuse the method above
+        
+        // Update User
+        profile.getUser().setName(dto.getName());
+        profile.getUser().setEmail(dto.getEmail());
+        
+        // Update Profile
+        profile.setCompanyName(dto.getCompanyName());
+        profile.setGstNumber(dto.getGstNumber());
+        profile.setAddress(dto.getAddress());
+        
+        return vendorProfileRepository.save(profile);
     }
 }
