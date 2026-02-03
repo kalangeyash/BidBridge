@@ -16,4 +16,10 @@ public interface TenderService {
     List<Tender> getActiveTenders();
     
     List<Tender> getTendersByBuyerId(Long buyerProfileId);
+    
+    List<Tender> getAllOpenTenders();
+    Tender getTenderById(Long id);
+    List<Tender> getAllTenders();
+    
+    void deleteTender(Long tenderId);
 }

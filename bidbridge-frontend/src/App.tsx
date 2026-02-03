@@ -14,6 +14,8 @@ import VendorDashboard from './components/vendor/VendorDashboard';
 import BrowseTenders from './components/vendor/BrowseTenders';
 import AdminDashboard from './components/admin/AdminDashboard';
 import TenderForm from './components/buyer/TenderForm';
+import TenderBids from './components/buyer/TenderBids';
+import { Toaster } from 'sonner';
 
 // Component for the Landing Page 
 // Scoped Navigation here so it doesn't appear on Dashboards or Auth pages
@@ -41,8 +43,9 @@ function App() {
     <Router>
       <div className="min-h-screen bg-[#0a0a0a] overflow-x-hidden">
         {/* Navigation removed from here to prevent global visibility */}
-        
+        <Toaster position="top-right" richColors />
         <Routes>
+          
           {/* Public Routes */}
           <Route 
             path="/" 
@@ -55,6 +58,7 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={['ROLE_BUYER']} />}>
             <Route path="/buyer/dashboard" element={<BuyerDashboard />} />
             <Route path="/buyer/dashboard/tenderform" element={<TenderForm />} />
+            <Route path="/buyer/tender/:tenderId/bids" element={<TenderBids />} />
           </Route>
 
           {/* Vendor Specific Routes */}

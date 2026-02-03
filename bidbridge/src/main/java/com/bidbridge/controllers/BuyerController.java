@@ -102,5 +102,10 @@ public class BuyerController {
 
         return ResponseEntity.ok(responses);
     }
+    @DeleteMapping("/tenders/{tenderId}")
+    public ResponseEntity<String> deleteTender(@PathVariable Long tenderId) {
+        tenderService.deleteTender(tenderId);
+        return ResponseEntity.ok("Tender and associated bids deleted successfully");
+    }
     
 }

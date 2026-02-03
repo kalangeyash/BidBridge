@@ -23,6 +23,7 @@ public class TenderServiceImpl implements TenderService {
     private final TenderRepository tenderRepository;
     private final BuyerProfileRepository buyerProfileRepository;
     private final CategoryRepository categoryRepository;
+    private final BidRepository bidRepository;
 
     @Override
     public Tender createTender(Tender tender) {
@@ -85,6 +86,32 @@ public class TenderServiceImpl implements TenderService {
         }
 
         return tenderRepository.findByBuyerProfileBuyerProfileId(buyerProfileId);
+    }
+    @Override
+    @Transactional
+    public void deleteTender(Long tenderId) {
+        // 1. Clear bids first to satisfy the DB schema constraints
+        bidRepository.deleteByTenderId(tenderId);
+        
+        // 2. Now safe to delete the tender
+        tenderRepository.deleteById(tenderId);
+    }
+    
+    @Override
+    public List<Tender> getAllOpenTenders() {
+        // Correct: Passing the Enum constant
+        return tenderRepository.findByStatus(TenderStatus.OPEN); 
+    }
+
+    @Override
+    public Tender getTenderById(Long id) {
+        return tenderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tender not found"));
+    }
+
+    @Override
+    public List<Tender> getAllTenders() {
+        return tenderRepository.findAll();
     }
 
 }

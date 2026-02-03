@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(
@@ -29,13 +30,13 @@ public class Bid {
     // Tender on which bid is placed
     @ManyToOne
     @JoinColumn(name = "tender_id", nullable = false)
-    @JsonIgnore
+    @JsonIgnoreProperties("bids")
     private Tender tender;
 
     // Vendor organization placing the bid
     @ManyToOne
     @JoinColumn(name = "vendor_profile_id", nullable = false)
-    @JsonIgnore
+    @JsonIgnoreProperties("bids")
     private VendorProfile vendorProfile;
 
     @Column(nullable = false)

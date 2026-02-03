@@ -13,4 +13,7 @@ public interface BidService {
     List<Bid> getBidsForTender(Long tenderId);
 
     List<Bid> getBidsByVendor(Long vendorProfileId);
+    List<Bid> getBidsByTenderId(Long tenderId);
+    List<Bid> getBidsByVendorId(Long vendorId);
+    public void acceptBid(Long bidId);
 }
