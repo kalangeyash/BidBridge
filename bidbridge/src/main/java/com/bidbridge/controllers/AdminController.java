@@ -1,9 +1,12 @@
 package com.bidbridge.controllers;
 
+import com.bidbridge.custom_exceptions.ResourceNotFoundException;
 import com.bidbridge.dto.AdminTenderDTO;
 import com.bidbridge.entities.Bid;
 import com.bidbridge.entities.Tender;
+import com.bidbridge.entities.TenderStatus;
 import com.bidbridge.entities.User;
+import com.bidbridge.repository.TenderRepository;
 import com.bidbridge.service.BidService;
 import com.bidbridge.service.TenderService;
 import com.bidbridge.service.UserService;
@@ -11,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +27,7 @@ public class AdminController {
     private final UserService userService;
     private final TenderService tenderService;
     private final BidService bidService;
+    private final TenderRepository tenderRepository;
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
@@ -60,5 +65,29 @@ public class AdminController {
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.ok("User deleted successfully");
+    }
+//    @PatchMapping("/tenders/{tenderId}/force-close")
+//    public ResponseEntity<String> forceCloseTender(@PathVariable Long tenderId) {
+//        Tender tender = tenderRepository.findById(tenderId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Tender not found"));
+//
+//        // Set endDate to 1 second before startDate to ensure it's "Expired"
+//        tender.setEndDate(tender.getStartDate().minusSeconds(1));
+//        tender.setStatus(TenderStatus.CLOSED);
+//        
+//        tenderRepository.save(tender);
+//        return ResponseEntity.ok("Tender force-closed for demonstration.");
+//    }
+    @PatchMapping("/tenders/{tenderId}/manipulate-date")
+    public ResponseEntity<String> manipulateTenderDate(@PathVariable Long tenderId) {
+        Tender tender = tenderRepository.findById(tenderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tender not found"));
+
+        // Set endDate specifically to Jan 1st, 2026
+        // This ensures the current date (Feb 2026) is past the deadline
+        tender.setEndDate(LocalDateTime.of(2026, 1, 1, 0, 0));
+        
+        tenderRepository.save(tender);
+        return ResponseEntity.ok("End date updated to 2026-01-01 for testing.");
     }
 }
