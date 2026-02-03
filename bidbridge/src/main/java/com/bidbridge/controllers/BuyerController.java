@@ -3,6 +3,7 @@ package com.bidbridge.controllers;
 
 import com.bidbridge.dto.BuyerProfileResponse;
 import com.bidbridge.dto.BuyerRegistrationRequest;
+import com.bidbridge.dto.BuyerUpdateDTO;
 import com.bidbridge.dto.TenderRequest;
 import com.bidbridge.dto.TenderResponse;
 import com.bidbridge.entities.*;
@@ -106,6 +107,27 @@ public class BuyerController {
     public ResponseEntity<String> deleteTender(@PathVariable Long tenderId) {
         tenderService.deleteTender(tenderId);
         return ResponseEntity.ok("Tender and associated bids deleted successfully");
+    }
+    @GetMapping("/{buyerId}")
+    public ResponseEntity<BuyerUpdateDTO> getProfile(@PathVariable Long buyerId) {
+        BuyerProfile profile = buyerService.getBuyerById(buyerId);
+        
+        BuyerUpdateDTO dto = new BuyerUpdateDTO();
+        dto.setName(profile.getUser().getName());
+        dto.setEmail(profile.getUser().getEmail());
+        dto.setOrganizationName(profile.getOrganizationName());
+        dto.setDepartment(profile.getDepartment());
+        dto.setOrganizationType(profile.getOrganizationType());
+        dto.setContactPhone(profile.getContactPhone());
+        
+        return ResponseEntity.ok(dto);
+    }
+
+    @PutMapping("/{buyerId}/profile")
+    public ResponseEntity<BuyerProfile> updateProfile(
+            @PathVariable Long buyerId,
+            @Valid @RequestBody BuyerUpdateDTO dto) {
+        return ResponseEntity.ok(buyerService.updateProfile(buyerId, dto));
     }
     
 }

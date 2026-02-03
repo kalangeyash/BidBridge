@@ -2,6 +2,7 @@ package com.bidbridge.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.bidbridge.entities.BuyerProfile;
 import com.bidbridge.entities.Category;
@@ -31,5 +32,8 @@ public interface TenderRepository extends JpaRepository<Tender, Long> {
     List<Tender> findByCategory(Category category);
     
     List<Tender> findByBuyerProfileBuyerProfileId(Long buyerProfileId);
+    
+    @Query("SELECT t FROM Tender t LEFT JOIN FETCH t.category LEFT JOIN FETCH t.buyerProfile")
+    List<Tender> findAllTendersWithDetails();
 
 }

@@ -1,5 +1,7 @@
 package com.bidbridge.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +20,7 @@ public class BuyerProfile {
     
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
+    @JsonIgnoreProperties("buyerProfile")
     private User user;
 
     @Column(nullable = false)

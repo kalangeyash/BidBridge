@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard, LogOut, Gavel, Building2, Tag, Calendar, AlertCircle, ClipboardList, Search, UserCircle } from 'lucide-react';
+import { LayoutDashboard, LogOut, Gavel, Building2, Tag, Calendar, AlertCircle, ClipboardList, Search, UserCircle, X } from 'lucide-react';
 import api from '../../services/api'; 
 import { Button } from '../../components/ui/button';
 import { toast } from 'sonner';
 import BidModal from './BidModel'; 
-import UpdateProfileModal from './UpdateProfileModal'; // New Import
+import UpdateProfileModal from './UpdateProfileModal'; 
 
 // --- Interfaces ---
 interface Tender {
@@ -34,8 +34,9 @@ const VendorDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [selectedTender, setSelectedTender] = useState<Tender | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false); // New State
-  
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false); 
+  const [searchTerm, setSearchTerm] = useState(''); // Search State
+
   const navigate = useNavigate();
   const vendorId = localStorage.getItem('profileId');
 
@@ -50,7 +51,15 @@ const VendorDashboard = () => {
     setIsModalOpen(true);
   };
 
-  // Fetch Logic
+  // Derived State: Filtered Tenders based on Search Term
+  const filteredTenders = tenders.filter((tender) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      tender.title.toLowerCase().includes(term) || 
+      tender.category?.name.toLowerCase().includes(term)
+    );
+  });
+
   const fetchDashboardData = async () => {
     setLoading(true);
     try {
@@ -97,7 +106,6 @@ const VendorDashboard = () => {
         </div>
         
         <div className="flex gap-3">
-          {/* New Update Profile Button */}
           <Button 
             variant="outline" 
             onClick={() => setIsUpdateModalOpen(true)}
@@ -134,6 +142,28 @@ const VendorDashboard = () => {
 
       {activeTab === 'browse' ? (
         <div className="space-y-6">
+          {/* Search Bar UI */}
+          <div className="relative max-w-md">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="h-4 w-4 text-muted-foreground" />
+            </div>
+            <input
+              type="text"
+              placeholder="Search by tender name or category..."
+              className="block w-full pl-10 pr-10 py-2.5 bg-[#1a1a1a] border border-border rounded-xl text-sm placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {searchTerm && (
+              <button 
+                onClick={() => setSearchTerm('')}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground hover:text-white"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+
           <div className="bg-[#121212] border border-border rounded-2xl overflow-hidden shadow-xl">
             <table className="w-full text-left border-collapse">
               <thead className="bg-muted/40 text-muted-foreground text-[10px] uppercase tracking-widest">
@@ -148,7 +178,9 @@ const VendorDashboard = () => {
               <tbody className="divide-y divide-border/50">
                 {loading ? (
                   <tr><td colSpan={5} className="p-20 text-center text-muted-foreground">Loading Tenders...</td></tr>
-                ) : tenders.map((tender) => (
+                ) : filteredTenders.length === 0 ? (
+                  <tr><td colSpan={5} className="p-20 text-center text-muted-foreground">No tenders found matching your search.</td></tr>
+                ) : filteredTenders.map((tender) => (
                   <tr key={tender.tenderId} className="hover:bg-muted/20 transition-all group">
                     <td className="p-5">
                       <div className="font-semibold text-white group-hover:text-primary">{tender.title}</div>
@@ -170,6 +202,7 @@ const VendorDashboard = () => {
         </div>
       ) : (
         <div className="bg-[#121212] border border-border rounded-2xl overflow-hidden shadow-xl">
+          {/* Table for My Bids stays the same */}
           <table className="w-full text-left border-collapse">
             <thead className="bg-muted/40 text-muted-foreground text-[10px] uppercase tracking-widest">
               <tr>

@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "tenders")
 @Getter
@@ -27,11 +29,13 @@ public class Tender {
  // Category of the tender
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
+    @JsonIgnoreProperties({"tenders", "user"}) // Stop Jackson from looking into the buyer's list or user details
     private Category category;
 
     // Buyer organization that published the tender
     @ManyToOne
     @JoinColumn(name = "buyer_profile_id", nullable = false)
+    @JsonIgnoreProperties("tenders") // Stop Jackson from looking into other tenders in this category
     private BuyerProfile buyerProfile;
 
     private Double budgetMin;

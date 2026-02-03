@@ -3,6 +3,7 @@ package com.bidbridge.service;
 
 import com.bidbridge.custom_exceptions.DuplicateResourceException;
 import com.bidbridge.custom_exceptions.ResourceNotFoundException;
+import com.bidbridge.dto.BuyerUpdateDTO;
 import com.bidbridge.entities.BuyerProfile;
 import com.bidbridge.entities.Role;
 import com.bidbridge.entities.User;
@@ -54,5 +55,29 @@ public class BuyerProfileServiceImpl implements BuyerProfileService {
     public BuyerProfile getProfileByUserId(Long userId) {
         return buyerProfileRepository.findByUser_UserId(userId)
                .orElseThrow(() -> new ResourceNotFoundException("Profile not found"));
+    }
+    @Override
+    @Transactional
+    public BuyerProfile updateProfile(Long buyerId, BuyerUpdateDTO dto) {
+        BuyerProfile profile = buyerProfileRepository.findById(buyerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Buyer not found"));
+
+        // 1. Update User Entity details
+        User user = profile.getUser();
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+
+        // 2. Update BuyerProfile Entity details
+        profile.setOrganizationName(dto.getOrganizationName());
+        profile.setDepartment(dto.getDepartment());
+        profile.setOrganizationType(dto.getOrganizationType());
+        profile.setContactPhone(dto.getContactPhone());
+
+        return buyerProfileRepository.save(profile);
+    }
+    @Override
+    public BuyerProfile getBuyerById(Long buyerId) {
+        return buyerProfileRepository.findById(buyerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Buyer Profile not found for ID: " + buyerId));
     }
 }

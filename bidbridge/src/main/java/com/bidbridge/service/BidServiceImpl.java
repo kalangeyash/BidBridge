@@ -120,4 +120,9 @@ public class BidServiceImpl implements BidService {
         bidRepository.saveAll(allBids);
         tenderRepository.save(tender);
     }
+    @Override
+    public List<Bid> getAllBids() {
+        // This fetches every single bid across all tenders and vendors
+        return bidRepository.findAll();
+    }
 }

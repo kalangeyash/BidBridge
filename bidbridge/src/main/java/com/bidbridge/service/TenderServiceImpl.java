@@ -3,6 +3,7 @@ package com.bidbridge.service;
 
 import com.bidbridge.custom_exceptions.BadRequestException;
 import com.bidbridge.custom_exceptions.ResourceNotFoundException;
+import com.bidbridge.dto.TenderUpdateDTO;
 import com.bidbridge.entities.BuyerProfile;
 import com.bidbridge.entities.Category;
 import com.bidbridge.entities.Tender;
@@ -103,15 +104,53 @@ public class TenderServiceImpl implements TenderService {
         return tenderRepository.findByStatus(TenderStatus.OPEN); 
     }
 
+//    @Override
+//    public Tender getTenderById(Long id) {
+//        return tenderRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Tender not found"));
+//    }
     @Override
-    public Tender getTenderById(Long id) {
-        return tenderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tender not found"));
+    public Tender getTenderById(Long tenderId) {
+        return tenderRepository.findById(tenderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tender not found with id: " + tenderId));
+    }
+    @Override
+    @Transactional
+    public Tender updateTender(Long tenderId, TenderUpdateDTO dto) {
+        Tender tender = tenderRepository.findById(tenderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tender not found"));
+
+        // Update only the allowed fields
+        tender.setTitle(dto.getTitle());
+        tender.setEndDate(dto.getEndDate());
+
+        // Update Category by ID
+        Category category = categoryRepository.findById(dto.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+        tender.setCategory(category);
+
+        return tenderRepository.save(tender);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Tender> getAllTenders() {
         return tenderRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Tender adminUpdateStatus(Long tenderId, String status) {
+        Tender tender = tenderRepository.findById(tenderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Tender not found"));
+        
+        try {
+            tender.setStatus(TenderStatus.valueOf(status.toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException("Invalid Status: " + status);
+        }
+        
+        return tenderRepository.save(tender);
     }
 
 }

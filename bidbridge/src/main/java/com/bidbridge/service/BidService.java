@@ -16,4 +16,5 @@ public interface BidService {
     List<Bid> getBidsByTenderId(Long tenderId);
     List<Bid> getBidsByVendorId(Long vendorId);
     public void acceptBid(Long bidId);
+    List<Bid> getAllBids(); // Should return all bids from the DB
 }

@@ -37,18 +37,18 @@ const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
             </p>
             
             <div className="mt-8 grid grid-cols-3 gap-6">
-              <div>
-                <div className="text-2xl font-bold text-primary">₹2,400Cr+</div>
-                <div className="text-sm text-muted-foreground">Tenders Processed</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-primary">15,000+</div>
-                <div className="text-sm text-muted-foreground">Verified Vendors</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-primary">100%</div>
-                <div className="text-sm text-muted-foreground">Sealed Security</div>
-              </div>
+                {/* <div>
+                  <div className="text-2xl font-bold text-primary">₹2,400Cr+</div>
+                  <div className="text-sm text-muted-foreground">Tenders Processed</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-primary">15,000+</div>
+                  <div className="text-sm text-muted-foreground">Verified Vendors</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-primary">100%</div>
+                  <div className="text-sm text-muted-foreground">Sealed Security</div>
+                </div> */}
             </div>
           </div>
           
