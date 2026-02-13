@@ -1,4 +1,5 @@
 import { ArrowRight, Shield, Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface HeroProps {
   role: 'buyer' | 'vendor';
@@ -28,11 +29,13 @@ export default function Hero({ role }: HeroProps) {
               Procurement
             </h1>
 
+            <Link to='/login'>
             <p className="text-xl text-[#ffdccc]/70 leading-relaxed max-w-lg">
               {role === 'buyer'
                 ? 'Launch secure tenders. Sealed bids, verified vendors, transparent outcomes.'
                 : 'Discover verified opportunities. Submit sealed bids with confidence. Build your reputation.'}
             </p>
+            </Link>
 
             <div className="flex items-center space-x-4 pt-4">
               <button className="group relative px-8 py-4 bg-[#fb6376] text-white rounded-md font-medium hover:bg-[#fb6376]/90 transition-all flex items-center space-x-2">
