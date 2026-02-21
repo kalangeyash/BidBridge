@@ -79,7 +79,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api") 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://bidbridge.vercel.app")
 public class TenderController {
  
     private final TenderService tenderService;

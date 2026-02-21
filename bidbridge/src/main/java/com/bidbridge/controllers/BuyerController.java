@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/buyers")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*")
+@CrossOrigin(origins = "https://bidbridge.vercel.app", allowedHeaders = "*")
 public class BuyerController {
     private final BuyerProfileService buyerService;
     private final TenderService tenderService;

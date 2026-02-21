@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/categories") // Base path accessible to all roles
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*")
+@CrossOrigin(origins = "https://bidbridge.vercel.app", allowedHeaders = "*")
 public class CategoryController {
 
     private final CategoryService categoryService;

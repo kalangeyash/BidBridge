@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/vendors")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*")
+@CrossOrigin(origins = "https://bidbridge.vercel.app", allowedHeaders = "*")
 public class VendorController {
 
     private final VendorProfileService vendorService;
