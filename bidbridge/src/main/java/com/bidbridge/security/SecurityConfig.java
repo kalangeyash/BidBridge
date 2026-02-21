@@ -80,27 +80,42 @@ public class SecurityConfig {
 //        source.registerCorsConfiguration("/**", config);
 //        return source;
 //    }
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowedOrigins(List.of("https://bidbridge.vercel.app")); 
+//        
+//        // !!! ADDED "PATCH" HERE !!!
+//        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+//        
+//        config.setAllowedHeaders(List.of(
+//            "Authorization", 
+//            "Content-Type", 
+//            "Cache-Control", 
+//            "X-Requested-With", 
+//            "Accept", 
+//            "Origin"
+//        ));
+//        config.setAllowCredentials(true);
+//        config.setExposedHeaders(List.of("Authorization"));
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", config);
+//        return source;
+//    }
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("https://bidbridge.vercel.app")); 
-        
-        // !!! ADDED "PATCH" HERE !!!
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        
-        config.setAllowedHeaders(List.of(
-            "Authorization", 
-            "Content-Type", 
-            "Cache-Control", 
-            "X-Requested-With", 
-            "Accept", 
-            "Origin"
-        ));
-        config.setAllowCredentials(true);
+
+        config.setAllowedOriginPatterns(List.of("https://*.vercel.app"));
+        config.setAllowedMethods(List.of("*"));
+        config.setAllowedHeaders(List.of("*"));
         config.setExposedHeaders(List.of("Authorization"));
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
+
         return source;
     }
 
